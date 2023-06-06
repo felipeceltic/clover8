@@ -15,3 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);
+
+mix.copy('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/js')
+.copy('node_modules/bootstrap/dist/css/bootstrap.min.css', 'public/css');
+
