@@ -6,9 +6,11 @@
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Clover</span>
       </a>
+      @auth
       <i class="bi bi-list toggle-sidebar-btn"></i>
+      @endauth
     </div><!-- End Logo -->
-
+    @auth
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
@@ -25,7 +27,7 @@
           </a>
         </li><!-- End Search Icon-->
 
-        @auth
+
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -219,5 +221,11 @@
       </ul>
       
       @endauth
+      @guest
+      <nav class="header-nav ms-auto me-3">
+        <a href="{{route('login')}}" class="btn btn-primary">Entrar</a>
+        <a href="{{route('register')}}" class="btn btn-primary">Cadastrar</a>
+      </nav>
+      @endguest
     </nav>
   </header>
