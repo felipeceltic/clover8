@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FinancialTransaction;
 use Carbon\Carbon;
+use Ramsey\Uuid\Type\Decimal;
 
 class ReportController extends Controller
 {
@@ -39,7 +40,7 @@ class ReportController extends Controller
 
         $transactions = FinancialTransaction::where('user_id', $user->id)
         ->whereBetween('date', [$startDateExpenses, $endDateExpenses])
-        ->orderBy('created_at', 'desc')
+        ->orderBy('date', 'asc')
         ->get();
 
         $expenses = FinancialTransaction::where('user_id', $user->id)
@@ -66,6 +67,14 @@ class ReportController extends Controller
         ->sum('amount');
         //$totalIncome = number_format($totalIncome, 2, ',', '.');
 
-        return view('dashboard', compact('transactions', 'incomes', 'expenses', 'totalExpense', 'totalIncome', 'startDateIncomes', 'endDateIncomes', 'startDateExpenses', 'endDateExpenses'));
+        $incomeAmountArray = $incomes->map(function ($incomes) {
+            return (float) $incomes->amount;
+        });
+        
+        $expenseAmountArray = $expenses->map(function ($expenses) {
+            return (float) $expenses->amount;
+        });
+        
+        return view('dashboard', compact('transactions', 'incomes', 'expenses', 'totalExpense', 'totalIncome', 'incomeAmountArray', 'expenseAmountArray', 'startDateIncomes', 'endDateIncomes', 'startDateExpenses', 'endDateExpenses'));
     }
 }

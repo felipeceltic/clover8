@@ -146,10 +146,10 @@
                             new ApexCharts(document.querySelector("#reportsChart"), {
                                 series: [{
                                     name: 'Despesas',
-                                    data: [2.558, 1000, 500],
+                                    data: {{$expenseAmountArray}},
                                 }, {
                                     name: 'Receitas',
-                                    data: [2.558, 2000, 1000]
+                                    data: {{$incomeAmountArray}}
                                 }],
                                 chart: {
                                     height: 350,
@@ -161,11 +161,11 @@
                                 markers: {
                                     size: 4
                                 },
-                                colors: ['#4154f1', '#2eca6a'],
+                                colors: ['#Ff0000', '#2eca6a'],
                                 fill: {
                                     type: "gradient",
                                     gradient: {
-                                        shadeIntensity: 1,
+                                        shadeIntensity: 2,
                                         opacityFrom: 0.3,
                                         opacityTo: 0.4,
                                         stops: [0, 90, 100]
@@ -177,15 +177,6 @@
                                 stroke: {
                                     curve: 'smooth',
                                     width: 2
-                                },
-                                xaxis: {
-                                    type: 'datetime',
-                                    categories: ["2023-01-01", "2023-02-01", "2023-03-01"]
-                                },
-                                tooltip: {
-                                    x: {
-                                        format: 'dd/MM/yy'
-                                    },
                                 }
                             }).render();
                         });
