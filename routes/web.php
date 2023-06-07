@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,15 +26,18 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
+    })->name('dashboard.default');
 });
 
-//Finance Index
-Route::get('/finance/index', [FinanceController::class, 'index'])->name('finance.index');
-Route::post('/finance/expense', [FinanceController::class, 'expenseStore'])->name('finance.expense.store');
-Route::post('/finance/income', [FinanceController::class, 'incomeStore'])->name('finance.income.store');
+//Finance expense
+Route::get('/finance/expense', [FinanceController::class, 'expenseIndex'])->name('finance.expense');
+Route::post('/finance/expense', [FinanceController::class, 'transactionStore'])->name('finance.expense.store');
+
+//Finance income
+Route::get('/finance/income', [FinanceController::class, 'incomeIndex'])->name('finance.income');
+Route::post('/finance/income', [FinanceController::class, 'transactionStore'])->name('finance.income.store');
 
 //Finance reports
-Route::get('/reports/index', [ReportController::class, 'indexReport'])->name('reports.index');
-Route::post('/reports/expense', [ReportController::class, 'indexReport'])->name('reports.expense');
-Route::post('/reports/income', [ReportController::class, 'indexReport'])->name('reports.income');
+Route::get('/dashboard', [ReportController::class, 'indexReport'])->name('reports.index');
+Route::post('/dashboard/expense', [ReportController::class, 'indexReport'])->name('reports.expense');
+Route::post('/dashboard/income', [ReportController::class, 'indexReport'])->name('reports.income');
