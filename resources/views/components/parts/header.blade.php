@@ -62,8 +62,8 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <div class="d-flex align-items-center">
-              <div class="rounded-circle overflow-hidden" style="width: 40px; height: 40px;">
-                <img src="{{ Auth::user()->profile_image }}" class="" alt="Imagem de perfil">
+              <div class="rounded-circle overflow-hidden" style="width: 36px; height: 36px;">
+                <img src="{{ Auth::user()->profile_image }}" class="img-fluid h-100 w-100" alt="Imagem de perfil">
               </div>
             </div>
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>

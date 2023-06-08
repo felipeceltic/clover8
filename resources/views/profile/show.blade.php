@@ -49,8 +49,8 @@
             </div>
 
             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-              <div class="rounded-circle overflow-hidden" style="width: 64px; height: 64px;">
-                <img src="{{ Auth::user()->profile_image }}" class="" alt="Imagem de perfil">
+              <div class="rounded-circle overflow-hidden" style="width: 96px; height: 96px;">
+                <img src="{{ Auth::user()->profile_image }}" class="img-fluid h-100 w-100" alt="Imagem de perfil">
               </div>
               <!-- Profile Edit Form -->
               <form action="{{route('user.profile.update')}}" method="POST" enctype="multipart/form-data">
