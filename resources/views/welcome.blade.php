@@ -121,47 +121,48 @@
                             new ApexCharts(document.querySelector("#reportsChart"), {
                                 series: [{
                                     name: 'Despesas',
-                                    data: [2.558, 1000, 500],
-                                }, {
+                                    data: ['10', '20', '30', '40', '50']
+                                },{
                                     name: 'Receitas',
-                                    data: [2.558, 2000, 1000]
+                                    data: ['50', '40', '30', '20', '10']
                                 }],
                                 chart: {
-                                    height: 350,
-                                    type: 'area',
-                                    toolbar: {
-                                        show: false
+                                    type: 'bar',
+                                    height: 350
+                                },
+                                plotOptions: {
+                                    bar: {
+                                        horizontal: false,
+                                        columnWidth: '55%',
+                                        endingShape: 'rounded'
                                     },
                                 },
-                                markers: {
-                                    size: 4
-                                },
-                                colors: ['#4154f1', '#2eca6a'],
-                                fill: {
-                                    type: "gradient",
-                                    gradient: {
-                                        shadeIntensity: 1,
-                                        opacityFrom: 0.3,
-                                        opacityTo: 0.4,
-                                        stops: [0, 90, 100]
-                                    }
-                                },
+                                colors: ["#Be2525", "#25be30"],
                                 dataLabels: {
                                     enabled: false
                                 },
                                 stroke: {
-                                    curve: 'smooth',
-                                    width: 2
+                                    show: true,
+                                    width: 2,
+                                    colors: ['transparent']
                                 },
                                 xaxis: {
-                                    type: 'datetime',
-                                    categories: ["2023-01-01", "2023-02-01", "2023-03-01"]
+                                    categories: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
+                                },
+                                yaxis: {
+                                    title: {
+                                        text: 'R$'
+                                    }
+                                },
+                                fill: {
+                                    opacity: 1
                                 },
                                 tooltip: {
-                                    x: {
-                                        format: 'dd/MM/yy'
-                                    },
+                                    y: {
+
+                                    }
                                 }
+
                             }).render();
                         });
                     </script>

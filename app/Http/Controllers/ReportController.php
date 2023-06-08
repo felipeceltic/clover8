@@ -67,14 +67,45 @@ class ReportController extends Controller
         ->sum('amount');
         //$totalIncome = number_format($totalIncome, 2, ',', '.');
 
-        $incomeAmountArray = $incomes->map(function ($incomes) {
-            return (float) $incomes->amount;
-        });
+        $incomeAmountArray = [];
+        $expenseAmountArray = [];
+    
+        // Calcula a soma das receitas (incomes)
+        foreach ($incomes as $income) {
+            $month = Carbon::parse($income->date)->format('m/Y');
+            if (isset($incomeAmountArray[$month])) {
+                $incomeAmountArray[$month] += (float) $income->amount;
+            } else {
+                $incomeAmountArray[$month] = (float) $income->amount;
+            }
+        }
+    
+        // Calcula a soma das despesas (expenses)
+        foreach ($expenses as $expense) {
+            $month = Carbon::parse($expense->date)->format('m/Y');
+            if (isset($expenseAmountArray[$month])) {
+                $expenseAmountArray[$month] += (float) $expense->amount;
+            } else {
+                $expenseAmountArray[$month] = (float) $expense->amount;
+            }
+        }
+
+        // Converte os arrays em strings
+        $incomeAmountArray = json_encode(array_values($incomeAmountArray));
+        $expenseAmountArray = json_encode(array_values($expenseAmountArray));
+
+        $transactionMonths = [];
+
+        foreach ($transactions as $transaction) {
+            $month = Carbon::parse($transaction->date)->locale('pt-BR')->isoFormat('MMMM');
+            if (!in_array($month, $transactionMonths)) {
+                $transactionMonths[] = $month;
+            }
+        }
+
+        // Converte o array de meses em uma string JSON
+        $transactionMonths = json_encode(array_values($transactionMonths));
         
-        $expenseAmountArray = $expenses->map(function ($expenses) {
-            return (float) $expenses->amount;
-        });
-        
-        return view('dashboard', compact('transactions', 'incomes', 'expenses', 'totalExpense', 'totalIncome', 'incomeAmountArray', 'expenseAmountArray', 'startDateIncomes', 'endDateIncomes', 'startDateExpenses', 'endDateExpenses'));
+        return view('dashboard', compact('transactions', 'incomes', 'expenses', 'totalExpense', 'totalIncome', 'incomeAmountArray', 'expenseAmountArray', 'startDateIncomes', 'endDateIncomes', 'startDateExpenses', 'endDateExpenses', 'transactionMonths'));
     }
 }

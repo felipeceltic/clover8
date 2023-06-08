@@ -82,7 +82,8 @@
         </div>
 
         <div class="col-xxl-4 col-md-6">
-            <div class="card info-card border border-danger border-opacity-50 table-responsive rounded" style="height: 240px;">
+            <div class="card info-card border border-danger border-opacity-50 table-responsive rounded"
+                style="height: 240px;">
                 <table class="table table-sm m-3">
                     <thead>
                         <tr>
@@ -107,7 +108,8 @@
         </div>
 
         <div class="col-xxl-4 col-md-6">
-            <div class="card info-card border border-success border-opacity-50 table-responsive rounded" style="height: 240px;">
+            <div class="card info-card border border-success border-opacity-50 table-responsive rounded"
+                style="height: 240px;">
                 <table class="table table-sm m-3">
                     <thead>
                         <tr>
@@ -143,41 +145,52 @@
 
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
+                            var transactionMonths = JSON.parse('{!! $transactionMonths !!}');
                             new ApexCharts(document.querySelector("#reportsChart"), {
                                 series: [{
                                     name: 'Despesas',
-                                    data: {{$expenseAmountArray}},
-                                }, {
+                                    data: {{$expenseAmountArray}}
+                                },{
                                     name: 'Receitas',
                                     data: {{$incomeAmountArray}}
                                 }],
                                 chart: {
-                                    height: 350,
-                                    type: 'area',
-                                    toolbar: {
-                                        show: false
+                                    type: 'bar',
+                                    height: 350
+                                },
+                                plotOptions: {
+                                    bar: {
+                                        horizontal: false,
+                                        columnWidth: '55%',
+                                        endingShape: 'rounded'
                                     },
                                 },
-                                markers: {
-                                    size: 4
-                                },
-                                colors: ['#Ff0000', '#2eca6a'],
-                                fill: {
-                                    type: "gradient",
-                                    gradient: {
-                                        shadeIntensity: 2,
-                                        opacityFrom: 0.3,
-                                        opacityTo: 0.4,
-                                        stops: [0, 90, 100]
-                                    }
-                                },
+                                colors: ["#Be2525", "#25be30"],
                                 dataLabels: {
                                     enabled: false
                                 },
                                 stroke: {
-                                    curve: 'smooth',
-                                    width: 2
+                                    show: true,
+                                    width: 2,
+                                    colors: ['transparent']
+                                },
+                                xaxis: {
+                                    categories: transactionMonths,
+                                },
+                                yaxis: {
+                                    title: {
+                                        text: 'R$'
+                                    }
+                                },
+                                fill: {
+                                    opacity: 1
+                                },
+                                tooltip: {
+                                    y: {
+
+                                    }
                                 }
+
                             }).render();
                         });
                     </script>
@@ -208,7 +221,8 @@
                         <tbody>
                             @foreach ($transactions as $t)
                                 <tr>
-                                    <th class="d-none" scope="row"><a href="#">#{{ $t->id }}</a></th>
+                                    <th class="d-none" scope="row"><a href="#">#{{ $t->id }}</a>
+                                    </th>
                                     <td>{{ Carbon::parse($t->date)->format('d/m/Y') }}</td>
                                     <td><a href="#" class="text-primary">{{ $t->description }}</a></td>
                                     <td>R${{ $t->amount }}</td>
