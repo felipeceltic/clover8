@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard.default');
 });
+
+//User profile
+Route::post('/user/profile', [UserController::class, 'profileUpdate'])->name('user.profile.update');
 
 //Finance expense
 Route::get('/finance/expense', [FinanceController::class, 'expenseIndex'])->name('finance.expense');

@@ -6,7 +6,9 @@
         <img src="../assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Clover</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      @auth
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+      @endauth
     </div><!-- End Logo -->
     @auth
 
@@ -59,7 +61,11 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-circle">
+            <div class="d-flex align-items-center">
+              <div class="rounded-circle overflow-hidden" style="width: 40px; height: 40px;">
+                <img src="{{ Auth::user()->profile_image }}" class="" alt="Imagem de perfil">
+              </div>
+            </div>
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
           </a><!-- End Profile Iamge Icon -->
 
