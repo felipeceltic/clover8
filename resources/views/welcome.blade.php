@@ -1,4 +1,7 @@
 <x-parts.header />
+@auth
+    <x-parts.sidebar />
+@endauth
 <main class="m-4 p-4 mt-5">
 
     <div class="pagetitle text-center mt-5">
