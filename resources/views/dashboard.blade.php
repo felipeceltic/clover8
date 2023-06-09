@@ -145,14 +145,16 @@
 
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
+                            var expenseAmountArray = JSON.parse('{!! $expenseAmountArray !!}');
+                            var incomeAmountArray = JSON.parse('{!! $incomeAmountArray !!}');
                             var transactionMonths = JSON.parse('{!! $transactionMonths !!}');
                             new ApexCharts(document.querySelector("#reportsChart"), {
                                 series: [{
                                     name: 'Despesas',
-                                    data: {{$expenseAmountArray}}
+                                    data: expenseAmountArray
                                 },{
                                     name: 'Receitas',
-                                    data: {{$incomeAmountArray}}
+                                    data: incomeAmountArray
                                 }],
                                 chart: {
                                     type: 'bar',
@@ -161,7 +163,7 @@
                                 plotOptions: {
                                     bar: {
                                         horizontal: false,
-                                        columnWidth: '55%',
+                                        columnWidth: '15%',
                                         endingShape: 'rounded'
                                     },
                                 },
@@ -185,12 +187,9 @@
                                 fill: {
                                     opacity: 1
                                 },
-                                tooltip: {
-                                    y: {
-
-                                    }
+                                legend: {
+                                    position: 'top'
                                 }
-
                             }).render();
                         });
                     </script>

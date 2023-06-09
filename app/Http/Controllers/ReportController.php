@@ -99,7 +99,7 @@ class ReportController extends Controller
         foreach ($transactions as $transaction) {
             $month = Carbon::parse($transaction->date)->locale('pt-BR')->isoFormat('MMMM');
             if (!in_array($month, $transactionMonths)) {
-                $transactionMonths[] = $month;
+                array_push($transactionMonths, $month);
             }
         }
 
