@@ -4,7 +4,7 @@
 <div class="pagetitle">
   <h1>Perfil</h1>
 </div><!-- End Page Title -->
-
+<x-parts.errors/>
 <section class="section profile">
   <div class="row">
 
@@ -20,21 +20,17 @@
             </li>
 
             <li class="nav-item">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar perfil</button>
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar perfil</button>
             </li>
 
             {{-- <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Configurações</button>
             </li> --}}
-            @if ($errors->any())
-            <li class="nav-item">
-              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-change-password">Alterar senha</button>
-            </li>
-            @else
+
             <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Alterar senha</button>
             </li>
-            @endif
+
           </ul>
           <div class="tab-content pt-2">
 
@@ -55,11 +51,8 @@
               </div>
 
             </div>
-            @if (request()->route()->getName() == 'profile.show')
-            <div class="tab-pane show active fade profile-edit pt-3" id="profile-edit">
-            @else
-            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-            @endif
+
+            <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
               <div class="rounded-circle overflow-hidden" style="width: 96px; height: 96px;">
                 <img src="{{ Auth::user()->profile_image }}" class="img-fluid h-100 w-100" alt="Imagem de perfil">
               </div>
@@ -135,39 +128,29 @@
               </form><!-- End settings Form -->
 
             </div> --}}
-              @if ($errors->any())
-            <div class="tab-pane show active fade pt-3" id="profile-change-password">
-                  <div class="text-danger">
-                      <ul>
-                          @foreach ($errors->all() as $error)
-                              <li>{{ $error }}</li>
-                          @endforeach
-                      </ul>
-                  </div>
-              @else
-              <div class="tab-pane fade pt-3" id="profile-change-password">
-              @endif
+
+            <div class="tab-pane fade pt-3" id="profile-change-password">
               <!-- Change Password Form -->
               <form action="{{route('user.password.update')}}" method="POST">
                 @csrf
-                {{-- <div class="row mb-3">
-                  <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Senha atual</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="password" type="password" class="form-control" id="currentPassword">
-                  </div>
-                </div> --}}
-
                 <div class="row mb-3">
-                  <label for="password" class="col-md-4 col-lg-3 col-form-label">Nova senha</label>
+                  <label for="current_password" class="col-md-4 col-lg-3 col-form-label">Senha atual</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="password" type="password" class="form-control" id="password">
+                    <input name="current_password" type="password" class="form-control" id="current_password" value="{{ old('current_password') }}">
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="senha" class="col-md-4 col-lg-3 col-form-label text-nowrap">Confirme sua senha</label>
+                  <label for="password" class="col-md-4 col-lg-3 col-form-label">Nova senha</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="senha" type="password" class="form-control" id="senha">
+                    <input name="password" type="password" class="form-control" id="password" value="{{ old('password') }}">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="password_confirmation" class="col-md-4 col-lg-3 col-form-label text-nowrap">Confirme sua senha</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="password_confirmation" type="password" class="form-control" id="password_confirmation" value="{{ old('password_confirmation') }}">
                   </div>
                 </div>
 

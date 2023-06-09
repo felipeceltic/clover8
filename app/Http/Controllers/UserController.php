@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -45,7 +46,12 @@ class UserController extends Controller
     }
     public function passwordUpdate(Request $request){
         $validator = Validator::make($request->all(), [
-            'senha' => 'required|confirmed',
+            'password' => ['required', 'confirmed', 
+            Password::min(8)->letters()
+            ->mixedCase()
+            ->numbers()
+            ->symbols()
+        ],
         ]);
     
         if ($validator->fails()) {
