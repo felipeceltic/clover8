@@ -16,25 +16,33 @@
           <ul class="nav nav-tabs nav-tabs-bordered">
 
             <li class="nav-item">
-              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Resumo</button>
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Resumo</button>
             </li>
 
             <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar perfil</button>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Configurações</button>
+            </li> --}}
+            @if ($errors->any())
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-change-password">Alterar senha</button>
             </li>
-
+            @else
             <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Alterar senha</button>
             </li>
-
+            @endif
           </ul>
           <div class="tab-content pt-2">
 
-            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+            <div class="tab-pane fade profile-overview pt-3" id="profile-overview">
+
+              <div class="rounded-circle overflow-hidden" style="width: 96px; height: 96px;">
+                <img src="{{ Auth::user()->profile_image }}" class="img-fluid h-100 w-100" alt="Imagem de perfil">
+              </div>
 
               <div class="row mt-5">
                 <div class="col-lg-3 col-md-4 label ">Nome</div>
@@ -47,8 +55,11 @@
               </div>
 
             </div>
-
+            @if (request()->route()->getName() == 'profile.show')
+            <div class="tab-pane show active fade profile-edit pt-3" id="profile-edit">
+            @else
             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+            @endif
               <div class="rounded-circle overflow-hidden" style="width: 96px; height: 96px;">
                 <img src="{{ Auth::user()->profile_image }}" class="img-fluid h-100 w-100" alt="Imagem de perfil">
               </div>
@@ -63,9 +74,15 @@
                 </div>
 
                 <div class="row mb-3">
-                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nome</label>
+                  <label for="name" class="col-md-4 col-lg-3 col-form-label">Nome</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="fullName" type="text" class="form-control" id="fullName" value="{{Auth::user()->name}}">
+                    <input name="name" type="text" class="form-control" id="name" value="{{Auth::user()->name}}">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="email" class="col-md-4 col-lg-3 col-form-label">E-mail</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="email" type="text" class="form-control" id="email" value="{{Auth::user()->email}}">
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -77,7 +94,7 @@
 
             </div>
 
-            <div class="tab-pane fade pt-3" id="profile-settings">
+            {{-- <div class="tab-pane fade pt-3" id="profile-settings">
 
               <!-- Settings Form -->
               <form>
@@ -117,30 +134,40 @@
                 </div>
               </form><!-- End settings Form -->
 
-            </div>
-
-            <div class="tab-pane fade pt-3" id="profile-change-password">
+            </div> --}}
+              @if ($errors->any())
+            <div class="tab-pane show active fade pt-3" id="profile-change-password">
+                  <div class="text-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+              @else
+              <div class="tab-pane fade pt-3" id="profile-change-password">
+              @endif
               <!-- Change Password Form -->
-              <form>
-
-                <div class="row mb-3">
+              <form action="{{route('user.password.update')}}" method="POST">
+                @csrf
+                {{-- <div class="row mb-3">
                   <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Senha atual</label>
                   <div class="col-md-8 col-lg-9">
                     <input name="password" type="password" class="form-control" id="currentPassword">
                   </div>
-                </div>
+                </div> --}}
 
                 <div class="row mb-3">
-                  <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nova senha</label>
+                  <label for="password" class="col-md-4 col-lg-3 col-form-label">Nova senha</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="newpassword" type="password" class="form-control" id="newPassword">
+                    <input name="password" type="password" class="form-control" id="password">
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label text-nowrap">Confirme sua senha</label>
+                  <label for="senha" class="col-md-4 col-lg-3 col-form-label text-nowrap">Confirme sua senha</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                    <input name="senha" type="password" class="form-control" id="senha">
                   </div>
                 </div>
 

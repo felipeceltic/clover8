@@ -32,6 +32,7 @@ Route::middleware([
 
 //User profile
 Route::post('/user/profile', [UserController::class, 'profileUpdate'])->name('user.profile.update');
+Route::post('/user/profile/password', [UserController::class, 'passwordUpdate'])->name('user.password.update');
 
 //Finance expense
 Route::get('/finance/expense', [FinanceController::class, 'expenseIndex'])->name('finance.expense');
